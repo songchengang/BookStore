@@ -1,0 +1,52 @@
+﻿@model IEnumerable<BookStore1.Models.Book>
+
+@{
+    ViewData["Title"] = "Search";
+}
+
+<h1>Index</h1>
+@using (Html.BeginForm("Search", "Books", FormMethod.Get,
+   new { @class = "form-inline" }))
+{
+    @Html.Label("keyword","Book Name", new {@class="control-label"})
+    @Html.TextBox("keyword",null, new {@class="form-control"})
+    <input type="submit" value="Search" class="btn-sub" />
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BookName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookingId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookingId)
+                </td>
+                <td>
+                    @if (item.BookingId == null)
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="res">Reserve</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
